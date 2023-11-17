@@ -43,10 +43,15 @@ function App() {
         setTasks(tasks.filter((task) => !task.status));
     }
 
+    function handleAllDone() {
+        setTasks(tasks.map((task) => ({...task, status: true})));
+    }
+
     return (
         <div>
             <h1>todos</h1>
             <div>
+                <button onClick={handleAllDone}>Done All</button>
                 <input
                     type="text"
                     onKeyUp={handleAddTask}
