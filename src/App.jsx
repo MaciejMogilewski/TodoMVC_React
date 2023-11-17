@@ -44,8 +44,10 @@ function App() {
     }
 
     function handleAllDone() {
-        setTasks(tasks.map((task) => ({...task, status: true})));
+        let done = tasks.every((task) => task.status === true);
+        setTasks(tasks.map((task) => ({...task, status: !done})));
     }
+
 
     return (
         <div>
@@ -63,12 +65,14 @@ function App() {
                 {tasks
                     .filter((task) => filter === 'all' ? true : filter === task.status)
                     .map((task) => (
-                    <li key={task.id}>
-                        <button onClick={() => {handleChangeStatus(task)}}>{`${task.status}`}</button>
-                        <span>{task.name}</span>
-                        <button onClick={() => handleDeleteTask(task)}>x</button>
-                    </li>
-                ))}
+                        <li key={task.id}>
+                            <button onClick={() => {
+                                handleChangeStatus(task)
+                            }}>{`${task.status}`}</button>
+                            <span>{task.name}</span>
+                            <button onClick={() => handleDeleteTask(task)}>x</button>
+                        </li>
+                    ))}
             </ul>
             <span>{tasks.filter((task) => !task.status).length} items left</span>
             <div>
@@ -76,7 +80,8 @@ function App() {
                 <button onClick={() => setFilter(false)}>Active</button>
                 <button onClick={() => setFilter(true)}>Completed</button>
             </div>
-            {!!tasks.filter((task) => !task.status).length && (<button onClick={handleDeleteAllTask}>Clear Completed</button>)}
+            {!!tasks.filter((task) => !task.status).length && (
+                <button onClick={handleDeleteAllTask}>Clear Completed</button>)}
         </div>
     )
 }
