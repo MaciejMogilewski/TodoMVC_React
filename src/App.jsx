@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useState} from "react";
+
+function* genId() {
+    let id = 0;
+    while (true) {
+        yield id;
+        id++;
+    }
+}
+
+const nextId = genId();
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [value, setValue] = useState('');
+    const [tasks, setTasks] = useState([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    function handleInput(event) {
+        setValue(event.target.value);
+    }
+
+    function handleAddTask(event) {
+        if (event.key === 'Enter') {
+            setTasks([...tasks, {
+                id: nextId.next().value,
+                name: value,
+                status: false
+            }]);
+            setValue('');
+        }
+    }
+
+    function handleChangeStatus(task) {
+        task.status = !task.status;
+        setTasks([...tasks]);
+    }
+
+    function handleDeleteTask(taskToRemove) {
+        setTasks(tasks.filter((task) => task !== taskToRemove));
+    }
+
+    return (
+        <div>
+            <h1>todos</h1>
+            <div>
+                <input
+                    type="text"
+                    onKeyUp={handleAddTask}
+                    onChange={handleInput}
+                    value={value}
+                    placeholder='What needs to be done?'/>
+            </div>
+            <ul>
+                {tasks.map((task) => (
+                    <li key={task.id}>
+                        <button onClick={() => {handleChangeStatus(task)}}>{`${task.status}`}</button>
+                        <span>{task.name}</span>
+                        <button onClick={() => handleDeleteTask(task)}>x</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
 }
 
 export default App
