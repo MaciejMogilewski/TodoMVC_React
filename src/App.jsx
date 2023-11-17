@@ -61,6 +61,7 @@ function App() {
                     </li>
                 ))}
             </ul>
+            <span>{tasks.filter((task) => !task.status).length} items left</span>
             <div>
                 <button onClick={() => setFilter('all')}>All</button>
                 <button onClick={() => setFilter(false)}>Active</button>
