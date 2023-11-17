@@ -39,6 +39,10 @@ function App() {
         setTasks(tasks.filter((task) => task !== taskToRemove));
     }
 
+    function handleDeleteAllTask() {
+        setTasks(tasks.filter((task) => !task.status));
+    }
+
     return (
         <div>
             <h1>todos</h1>
@@ -67,6 +71,7 @@ function App() {
                 <button onClick={() => setFilter(false)}>Active</button>
                 <button onClick={() => setFilter(true)}>Completed</button>
             </div>
+            {!!tasks.filter((task) => !task.status).length && (<button onClick={handleDeleteAllTask}>Clear Completed</button>)}
         </div>
     )
 }
