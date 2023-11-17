@@ -13,6 +13,7 @@ const nextId = genId();
 function App() {
     const [value, setValue] = useState('');
     const [tasks, setTasks] = useState([]);
+    const [filter, setFilter] = useState('all')
 
     function handleInput(event) {
         setValue(event.target.value);
@@ -50,7 +51,9 @@ function App() {
                     placeholder='What needs to be done?'/>
             </div>
             <ul>
-                {tasks.map((task) => (
+                {tasks
+                    .filter((task) => filter === 'all' ? true : filter === task.status)
+                    .map((task) => (
                     <li key={task.id}>
                         <button onClick={() => {handleChangeStatus(task)}}>{`${task.status}`}</button>
                         <span>{task.name}</span>
@@ -58,6 +61,11 @@ function App() {
                     </li>
                 ))}
             </ul>
+            <div>
+                <button onClick={() => setFilter('all')}>All</button>
+                <button onClick={() => setFilter(false)}>Active</button>
+                <button onClick={() => setFilter(true)}>Completed</button>
+            </div>
         </div>
     )
 }
