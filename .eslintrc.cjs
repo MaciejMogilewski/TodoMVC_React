@@ -7,14 +7,15 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  ignorePatterns: ['dist'],
+  parserOptions: { ecmaVersion: 2021, sourceType: 'module' },
+  settings: { react: { version: 'detect' } },
+  plugins: ['react', 'react-hooks'],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react/jsx-uses-react': 'off', // Wyłącz stare ostrzeżenie dotyczące prototypów
+    'react/react-in-jsx-scope': 'off', // Wyłącz nowe ostrzeżenie dotyczące prototypów
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
-}
+};
+
