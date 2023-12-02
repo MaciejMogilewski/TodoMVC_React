@@ -6,16 +6,17 @@ function Task({task, handleChangeStatus, handleDeleteTask, handleContentEditable
     
     return (
         <li key={id} className={status ? 'task done' : 'task'}>
-            <i
+            <input
+                type="checkbox"
                 className='taskStatus'
                 onClick={() => {
                     handleChangeStatus(task)
                 }}
             >
-            </i>
+            </input>
             <span
                 className='taskName'
-                contentEditable
+//                contentEditable
                 onBlur={(event) => handleContentEditable(event, task)}
             >
                 {name}
