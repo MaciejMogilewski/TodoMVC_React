@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Header} from "./components/Header/Header.jsx";
 import InputWrapper from "./components/InputWrapper/InputWrapper.jsx";
 import Tasks from "./components/Tasks/Tasks.jsx";
 import {TaskCounter} from "./components/TaskCounter/TaskCounter.jsx";
 import {Filters} from "./components/Filters/Filters.jsx";
 import {ClearCompleted} from "./components/ClearCompleted/ClearCompleted.jsx";
+import {addTaskApi, getAllTasksApi} from "./helpers/api.js";
 
 function* genId() {
     let id = 0;
@@ -21,13 +22,19 @@ function App() {
     const [filter, setFilter] = useState('all')
     const [doneAll, setDoneAll] = useState(false);
 
+    useEffect(() => {
+            const controller = new AbortController();
 
-    function handleAddTask(value) {
-            setTasks([...tasks, {
-                id: nextId.next().value,
-                name: value,
-                status: false
-            }]);
+            getAllTasksApi(controller.signal).then(setTasks);
+
+            return () => {
+                controller.abort();
+            }
+        }, []);
+
+    async function handleAddTask(value) {
+            const task = await addTaskApi({name: value, status: false})
+            setTasks([...tasks, task]);
     }
 
     function handleChangeStatus(task) {
@@ -57,7 +64,6 @@ function App() {
             return task;
         }))
     }
-
 
     return (
         <div>
