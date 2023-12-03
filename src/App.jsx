@@ -22,7 +22,7 @@ function App() {
         }, []);
 
     async function handleAddTask(value) {
-            const task = await addTaskApi({name: value, status: false})
+            const task = await addTaskApi({name: value, status: false, createdAt: new Date()})
             setTasks([...tasks, task]);
     }
 
@@ -93,7 +93,7 @@ function App() {
                         <TaskCounter tasks={tasks} predicate={(task) => !task.status}/>
                         <Filters setFilter={setFilter}/>
 
-                        {!!tasks.filter((task) => !task.status).length && (
+                        {!!tasks.filter((task) => task.status).length && (
                             <ClearCompleted onClick={handleDeleteAllTask}/>)}
                     </div>
                 </>

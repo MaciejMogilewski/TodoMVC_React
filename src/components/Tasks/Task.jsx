@@ -1,11 +1,12 @@
 import './task.scss'
+import {Link} from "react-router-dom";
 
 function Task({task, handleChangeStatus, handleDeleteTask, handleContentEditable}) {
     const {id, name, status} = task;
 
     
     return (
-        <li key={id} className={status ? 'task done' : 'task'}>
+        <li className={status ? 'task done' : 'task'}>
             <input
                 type="checkbox"
                 className='taskStatus'
@@ -19,7 +20,7 @@ function Task({task, handleChangeStatus, handleDeleteTask, handleContentEditable
 //                contentEditable
                 onBlur={(event) => handleContentEditable(event, task)}
             >
-                {name}
+                <Link to={`/details/${id}`}>{name}</Link>
             </span>
             <button className='taskDeleteBtn' onClick={() => handleDeleteTask(task)}>x</button>
         </li>
