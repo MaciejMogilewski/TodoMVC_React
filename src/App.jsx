@@ -7,16 +7,6 @@ import {Filters} from "./components/Filters/Filters.jsx";
 import {ClearCompleted} from "./components/ClearCompleted/ClearCompleted.jsx";
 import {addTaskApi, getAllTasksApi} from "./helpers/api.js";
 
-function* genId() {
-    let id = 0;
-    while (true) {
-        yield id;
-        id++;
-    }
-}
-
-const nextId = genId();
-
 function App() {
     const [tasks, setTasks] = useState([]);
     const [filter, setFilter] = useState('all')
@@ -37,17 +27,32 @@ function App() {
             setTasks([...tasks, task]);
     }
 
+    async function deleteTaskApi(taskId) {
+        const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {method: 'DELETE'});
+        return await response.json();
+    }
+
     function handleChangeStatus(task) {
         task.status = !task.status;
         setTasks([...tasks]);
     }
 
-    function handleDeleteTask(taskToRemove) {
+    async function handleDeleteTask(taskToRemove) {
+        await deleteTaskApi(taskToRemove.id)
         setTasks(tasks.filter((task) => task !== taskToRemove));
     }
 
-    function handleDeleteAllTask() {
-        setTasks(tasks.filter((task) => !task.status));
+    async function handleDeleteAllTask() {
+        const filteredTasks = [];
+
+        for (const task of tasks) {
+            if (task.status) {
+                await deleteTaskApi(task.id)
+            } else {
+                filteredTasks.push(task);
+            }
+        }
+        setTasks(filteredTasks);
     }
 
     function handleAllDone() {
