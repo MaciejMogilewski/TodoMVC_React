@@ -1,8 +1,10 @@
 import './toggleStatuses.scss';
-function ToggleStatuses({handleAllDone, doneAll}) {
+// eslint-disable-next-line react/prop-types
+function ToggleStatuses({handleAllDone, tasks}) {
     return (
         <i
-            className={doneAll ? 'toggleStatuses done' : 'toggleStatuses'}
+            /* eslint-disable-next-line react/prop-types */
+            className={tasks.every((task) => task.status === true) ? 'toggleStatuses done' : 'toggleStatuses'}
             onClick={handleAllDone}
         ></i>
     );

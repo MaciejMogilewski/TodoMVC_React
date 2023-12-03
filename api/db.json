@@ -2,13 +2,18 @@
   "tasks": [
     {
       "name": "task",
-      "status": false,
+      "status": true,
       "id": 1
     },
     {
       "name": "dupa",
-      "status": false,
+      "status": true,
       "id": 2
+    },
+    {
+      "name": "faja",
+      "status": true,
+      "id": 3
     }
   ]
 }

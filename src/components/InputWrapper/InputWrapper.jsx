@@ -3,12 +3,12 @@ import InputTask from "./InputTask.jsx";
 import ToggleStatuses from "../ToggleStatuses/ToggleStatuses.jsx";
 
 // eslint-disable-next-line react/prop-types
-function InputWrapper({handleAddTask, handleAllDone, doneAll, tasks}) {
+function InputWrapper({handleAddTask, handleAllDone, tasks}) {
     return (
         <div className='inputWrapper'>
             {/* eslint-disable-next-line react/prop-types */}
             {!!tasks.length && (
-                <ToggleStatuses handleAllDone={handleAllDone} doneAll={doneAll}/>
+                <ToggleStatuses tasks={tasks} handleAllDone={handleAllDone}/>
             )}
             <InputTask
                 handleAddTask={handleAddTask}
