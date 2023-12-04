@@ -1,16 +1,11 @@
 {
   "tasks": [
     {
-      "name": "js",
-      "status": false,
-      "createdAt": "2023-12-03T14:22:38.794Z",
-      "id": 1
-    },
-    {
       "name": "python",
       "status": false,
       "createdAt": "2023-12-03T14:22:41.745Z",
-      "id": 2
+      "id": 2,
+      "description": "ssie"
     },
     {
       "name": "dupa",
